@@ -16,30 +16,38 @@ Actualmente, ambos tráficos compiten en una cola FIFO en el router de salida ha
 *   **Análisis y Monitorización:** Implementación del patrón *Observador* en C++ mediante "Vigilantes" conectados a las trazas del simulador para extraer métricas en tiempo real, complementado con análisis de archivos `.pcap` en Wireshark.
 
 ## ⚙️ Compilación y Ejecución
-El proyecto está diseñado para ejecutarse parametrizado por consola, lo que permite probar diferentes escenarios de estrés sin necesidad de recompilar el código en C++. 
+El proyecto está diseñado para ejecutarse en el simulador NS-3 parametrizado por consola, lo que permite probar diferentes escenarios de estrés sin modificar el código.
 
-Asegúrate de tener todos los archivos del proyecto dentro del subdirectorio `scratch/` de tu instalación de NS-3.
+**1. Preparación del Entorno**
+Asegúrate de copiar todos los archivos del código fuente (el archivo `.cc` principal y las cabeceras/clases vigilantes auxiliares) dentro del subdirectorio `scratch/` de tu instalación de NS-3.
 
-**1. Ejecución Básica (Valores por defecto)**
-Lanza la simulación con los parámetros estándar definidos en el código fuente:
+**2. Compilación del Proyecto**
+Desde la raíz del directorio de NS-3, configura y compila el entorno para que reconozca los nuevos ficheros:
+```bash
+./ns3 configure
+./ns3 build
+```
+
+**3. Ejecución Básica (Valores por defecto)**
+Una vez compilado con éxito, lanza la simulación con los parámetros estándar (FIFO, 150 Mbps, 50 Trading / 25 Diseño):
 ```bash
 NS_LOG="coworking" ./ns3 run "coworking"
 ```
 
-**2. Ejecución de Escenarios Personalizados**
-Puedes modificar variables clave en caliente como el ancho de banda WAN, la política QoS, o el número de usuarios. Ejemplo para activar Prioridad Estricta en un enlace de 130 Mbps con 20 usuarios de diseño:
+**4. Ejecución de Escenarios Personalizados**
+Puedes modificar variables clave en caliente. Ejemplo para activar Prioridad Estricta (QoS) en un enlace de 130 Mbps con 20 usuarios de diseño:
 ```bash
 ./ns3 run "coworking --useQoS=true --wanBW=130000000bps --nDesign=20"
 ```
 
-**3. Generación de Trazas para Wireshark**
-Si deseas extraer los archivos `.pcap` para inspeccionar el flujo de paquetes y comprobar las etiquetas TOS de prioridad:
+**5. Generación de Trazas para Wireshark**
+Si deseas extraer los archivos `.pcap` para inspeccionar el flujo de paquetes y comprobar visualmente las etiquetas TOS de prioridad:
 ```bash
 ./ns3 run "coworking --tracing=true"
 ```
 
-**4. Modo Experimentación (Extracción de Gráficas)**
-Para lanzar ejecuciones masivas y extraer los puntos necesarios para generar las gráficas de rendimiento (Latencia, Jitter, Throughput y Pérdida):
+**6. Modo Experimentación (Extracción de Gráficas)**
+Para lanzar ejecuciones y extraer los datos necesarios para generar las gráficas comparativas de rendimiento (Latencia, Jitter, Throughput y Pérdida):
 ```bash
 ./ns3 run "coworking --generatePlots=true"
 ```
