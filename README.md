@@ -1,7 +1,7 @@
 # 🌐 Simulación y Gestión QoS de Red en Coworking (NS-3)
 
 ## 📖 Descripción del Proyecto
-Este proyecto modela y simula la infraestructura de red del coworking "Innova Hub" utilizando el simulador de eventos discretos NS-3 (implementado en C++). El objetivo principal es resolver la congestión generada por la coexistencia de dos perfiles de usuarios con necesidades de red completamente opuestas:
+Este proyecto modela y simula la infraestructura de red de un coworking utilizando el simulador de eventos discretos NS-3 (implementado en C++). El objetivo principal es resolver la congestión generada por la coexistencia de dos perfiles de usuarios con necesidades de red completamente opuestas:
 *   **Usuarios de Trading:** Requieren latencia ultrabaja (<50ms) y jitter mínimo para enviar órdenes financieras críticas (tráfico UDP).
 *   **Usuarios de Diseño:** Generan transferencias masivas de archivos pesados hacia la nube que consumen todo el ancho de banda disponible (tráfico TCP).
 
@@ -18,35 +18,35 @@ Actualmente, ambos tráficos compiten en una cola FIFO en el router de salida ha
 ## ⚙️ Compilación y Ejecución
 El proyecto está diseñado para ejecutarse en el simulador NS-3 parametrizado por consola, lo que permite probar diferentes escenarios de estrés sin modificar el código.
 
-**1. Preparación del Entorno**
+**1. Preparación del Entorno:**
 Asegúrate de copiar todos los archivos del código fuente (el archivo `.cc` principal y las cabeceras/clases vigilantes auxiliares) dentro del subdirectorio `scratch/` de tu instalación de NS-3.
 
-**2. Compilación del Proyecto**
+**2. Compilación del Proyecto:**
 Desde la raíz del directorio de NS-3, configura y compila el entorno para que reconozca los nuevos ficheros:
 ```bash
 ./ns3 configure
 ./ns3 build
 ```
 
-**3. Ejecución Básica (Valores por defecto)**
+**3. Ejecución Básica (Valores por defecto):**
 Una vez compilado con éxito, lanza la simulación con los parámetros estándar (FIFO, 150 Mbps, 50 Trading / 25 Diseño):
 ```bash
 NS_LOG="coworking" ./ns3 run "coworking"
 ```
 
-**4. Ejecución de Escenarios Personalizados**
+**4. Ejecución de Escenarios Personalizados:**
 Puedes modificar variables clave en caliente. Ejemplo para activar Prioridad Estricta (QoS) en un enlace de 130 Mbps con 20 usuarios de diseño:
 ```bash
 ./ns3 run "coworking --useQoS=true --wanBW=130000000bps --nDesign=20"
 ```
 
-**5. Generación de Trazas para Wireshark**
+**5. Generación de Trazas para Wireshark:**
 Si deseas extraer los archivos `.pcap` para inspeccionar el flujo de paquetes y comprobar visualmente las etiquetas TOS de prioridad:
 ```bash
 ./ns3 run "coworking --tracing=true"
 ```
 
-**6. Modo Experimentación (Extracción de Gráficas)**
+**6. Modo Experimentación (Extracción de Gráficas):**
 Para lanzar ejecuciones y extraer los datos necesarios para generar las gráficas comparativas de rendimiento (Latencia, Jitter, Throughput y Pérdida):
 ```bash
 ./ns3 run "coworking --generatePlots=true"
