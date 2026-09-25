@@ -52,5 +52,5 @@ Para lanzar ejecuciones y extraer los datos necesarios para generar las gráfica
 ./ns3 run "coworking --generatePlots=true"
 ```
 
-## 📊 Conclusiones del Estudio
+## Conclusiones del Estudio
 La experimentación demostró que la implementación de **Prioridad Estricta (QoS)** es capaz de reducir la latencia del Trading al mínimo físico (~21 ms) sin importar la congestión. Sin embargo, para cumplir con el requisito de 0% de pérdida de paquetes y mantener a los diseñadores operativos, se concluyó como solución definitiva aplicar QoS junto a un dimensionamiento de la línea WAN a **130 Mbps**.
